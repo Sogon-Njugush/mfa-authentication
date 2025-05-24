@@ -3,7 +3,7 @@ import { use, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight, Link, Loader, MailCheckIcon } from "lucide-react";
+import { ArrowRight, Loader, MailCheckIcon } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -19,6 +19,7 @@ import { useMutation } from "@tanstack/react-query";
 import { forgotPasswordMutationFn } from "@/lib/api";
 import { useSearchParams } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
+import Link from "next/link";
 
 export default function ForgotPassword({}) {
   const params = useSearchParams();
