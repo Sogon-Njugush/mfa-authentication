@@ -1,7 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
+import ForgotPassword from "./_forgotpassword";
 
 const page = () => {
-  return <div>page</div>;
+  return (
+    <Suspense>
+      <ForgotPassword />
+    </Suspense>
+  );
 };
 
 export default page;
