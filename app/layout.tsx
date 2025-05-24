@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import { ThemeProvider } from "@/context/theme-provider";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import QueryProvider from "@/context/query-provider";
 
 const dm_Sans = DM_Sans({
   subsets: ["latin"],
@@ -21,14 +22,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={` bg-background ${dm_Sans.className} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange>
-          {children}
-          <Toaster />
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem={false}
+            disableTransitionOnChange>
+            {children}
+            <Toaster />
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );
