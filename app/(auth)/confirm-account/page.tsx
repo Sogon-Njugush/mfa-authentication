@@ -1,7 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
+import ConfirmAccount from "./_confirmaccount";
 
-const page = () => {
-  return <div>page</div>;
+const Page = () => {
+  return (
+    <Suspense>
+      <ConfirmAccount />
+    </Suspense>
+  );
 };
 
-export default page;
+export default Page;
