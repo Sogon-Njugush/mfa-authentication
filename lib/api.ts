@@ -86,3 +86,6 @@ export const sessionsQueryFn = async () => {
   const response = await API.get<SesionResponseType>(`/session/all`);
   return response.data;
 };
+
+export const sessionDelMutationFn = async (id: string) =>
+  await API.delete(`/session/${id}`);

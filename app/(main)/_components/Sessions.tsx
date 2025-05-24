@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
+import React, { useCallback } from "react";
 import SessionItem from "./SessionItem";
-import { useQuery } from "@tanstack/react-query";
-import { sessionsQueryFn } from "@/lib/api";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { sessionDelMutationFn, sessionsQueryFn } from "@/lib/api";
 import { Loader } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 const Sessions = () => {
   const { data, isLoading, refetch } = useQuery({
@@ -12,10 +13,34 @@ const Sessions = () => {
     staleTime: Infinity,
   });
 
+  const { mutate, isPending } = useMutation({
+    mutationFn: sessionDelMutationFn,
+  });
+
   const sessions = data?.sessions || [];
 
   const currentSession = sessions.find((session) => session.isCurrent);
   const otherSessions = sessions.filter((session) => !session.isCurrent);
+
+  const handleDelete = useCallback((id: string) => {
+    mutate(id, {
+      onSuccess: () => {
+        refetch();
+        toast({
+          title: "Success",
+          description: "Session deleted successfully",
+        });
+      },
+      onError: (error) => {
+        console.log(error);
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
+        });
+      },
+    });
+  }, []);
 
   return (
     <div className="via-root to-root rounded-xl bg-gradient-to-r p-0.5">
@@ -59,12 +84,12 @@ const Sessions = () => {
                   {otherSessions.map((session) => (
                     <li>
                       <SessionItem
-                        loading={false}
+                        loading={isPending}
                         userAgent={session.userAgent}
                         date={session.createdAt}
                         expiresAt={session.expiresAt}
                         isCurrent={session.isCurrent}
-                        onRemove={() => {}}
+                        onRemove={() => handleDelete(session._id)}
                       />
                     </li>
                   ))}
