@@ -39,3 +39,5 @@ export const forgotPasswordMutationFn = async (data: forgotPasswordType) =>
 
 export const resetPasswordMutationFn = async (data: resetPasswordType) =>
   await API.post(`auth/password/reset`, data);
+
+export const getUserSessionQueryFn = async () => await API.get(`/session`);
