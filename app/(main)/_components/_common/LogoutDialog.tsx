@@ -29,7 +29,7 @@ const LogoutDialog = (props: {
     onError: (error) => {
       toast({
         title: "Error",
-        description: error.message,
+        description: "Something went wrong",
         variant: "destructive",
       });
     },
